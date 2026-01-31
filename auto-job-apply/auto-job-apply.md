@@ -1,5 +1,5 @@
 # Auto-job-apply Skill
-> Version: 1.2.0
+> Version: 1.3.0
 > Last Updated: 2025-01-31
 
 ---
@@ -243,6 +243,95 @@ Files managed:
 
 ---
 
+### Storage Setup Check
+
+**On first run or when file operations fail, check for storage access:**
+
+1. Attempt to list files in the configured base path
+2. If successful → proceed normally
+3. If fails → trigger Setup Required flow
+
+### Setup Required Flow
+
+If file storage is not configured, pause and display:
+
+```
+## File Storage Setup Required
+
+To enable automatic file versioning, I need access to a file storage location
+(Google Drive recommended).
+
+**Current status:** File storage not configured
+
+**To set up Google Drive access:**
+
+1. Install the Google Drive MCP server:
+   - Open Claude Desktop settings
+   - Go to: Settings → Developer → MCP Servers
+   - Add new server with configuration below
+
+2. MCP Server Configuration:
+   ```json
+   {
+     "mcpServers": {
+       "gdrive": {
+         "command": "npx",
+         "args": ["-y", "@anthropic-ai/mcp-server-gdrive"]
+       }
+     }
+   }
+   ```
+
+3. Restart Claude Desktop
+
+4. Authorize Google Drive access when prompted
+
+5. Create a folder for this skill:
+   - Recommended: `/Job Applications/auto-job-apply/`
+   - This folder will store your applicant data and version history
+
+6. Tell me the folder path you created, and I'll save it for future sessions.
+
+**Alternative options:**
+- If you prefer a different MCP file server, let me know which one
+- If you cannot set up MCP now, I can provide file contents for manual saving (less convenient but still works)
+
+Would you like help with any of these steps?
+```
+
+### Setup Verification
+
+After user reports setup is complete:
+
+1. Attempt to create a test file: `_setup-test.txt`
+2. If successful:
+   - Delete test file
+   - Confirm: "File storage configured successfully! Ready to proceed."
+   - Save base path for future sessions
+3. If fails:
+   - Report specific error
+   - Offer troubleshooting guidance
+
+### Fallback Mode (No File Storage)
+
+If user cannot or chooses not to set up file storage:
+
+```
+"Understood. I'll operate in manual mode:
+- I'll provide updated file contents in chat
+- You can copy and save them manually
+- Version history will be your responsibility
+
+Note: You can set up automatic file storage anytime by saying 'setup file storage'."
+```
+
+In fallback mode:
+- After approval, provide complete file contents in a code block
+- User copies content to their preferred storage
+- Skill continues to function, just without automatic file operations
+
+---
+
 ## Update Protocol
 
 ### about-applicant.md Updates — Automatic File Versioning
@@ -310,6 +399,13 @@ When updates are approved, the skill automatically handles all file operations:
 ---
 
 ## Changelog
+
+### v1.3.0 — 2025-01-31
+- Added Storage Setup Check — detects when file storage is not configured
+- Added Setup Required Flow with step-by-step Google Drive MCP instructions
+- Added Setup Verification to confirm successful configuration
+- Added Fallback Mode for users who cannot set up file storage
+- Skill guides user through setup if needed, then proceeds automatically
 
 ### v1.2.0 — 2025-01-31
 - Automatic file operations — no user engagement required for file updates
