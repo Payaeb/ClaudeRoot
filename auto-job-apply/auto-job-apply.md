@@ -1,5 +1,5 @@
 # Auto-job-apply Skill
-> Version: 1.1.0
+> Version: 1.2.0
 > Last Updated: 2025-01-31
 
 ---
@@ -230,50 +230,67 @@ Approve updates? (Yes to all / Yes to specific items / No)
 
 ---
 
+## File Storage Configuration
+
+**Storage Location:** Google Drive (via MCP) or connected file system
+**Base Path:** `[Configure: e.g., /Job Applications/auto-job-apply/]`
+
+Files managed:
+- `about-applicant.md` — current applicant data
+- `about-applicant-YYYYMMDDNNN.md` — archived versions
+- `auto-job-apply.md` — current skill instructions
+- `auto-job-apply-YYYYMMDDNNN.md` — archived skill versions
+
+---
+
 ## Update Protocol
 
-### about-applicant.md Updates — File Versioning
+### about-applicant.md Updates — Automatic File Versioning
 
-When updates are approved, use this versioning system:
+When updates are approved, the skill automatically handles all file operations:
 
 **Naming Convention:** `about-applicant-YYYYMMDDNNN.md`
 - `YYYYMMDD` = Year, month, day (e.g., 20250131)
 - `NNN` = Serial number starting at 001 each day (e.g., 001, 002, 003)
 
-**Update Process:**
-1. Only update after session report and explicit user approval
-2. Show exact changes before applying
-3. Instruct user to:
+**Automatic Update Process:**
+1. Show session report with proposed changes
+2. Wait for user approval
+3. Upon approval, automatically:
+   - Check for existing archives from today to determine next serial number
    - Rename current `about-applicant.md` → `about-applicant-YYYYMMDDNNN.md`
-   - Example: `about-applicant.md` → `about-applicant-20250131001.md`
-4. Provide complete new `about-applicant.md` content with:
-   - Incremented version number
-   - Updated "Last Updated" date
-   - All existing information preserved
-   - New information added
-5. User creates fresh `about-applicant.md` with the provided content
-6. User uploads new file to Project knowledge
+   - Create new `about-applicant.md` with:
+     - Incremented version number
+     - Updated "Last Updated" date
+     - All existing information preserved
+     - New information added
+4. Confirm to user: "Files updated successfully. Archived previous version as about-applicant-YYYYMMDDNNN.md"
+
+**No user action required** — all file operations are automatic.
 
 **Version History:**
 - Archived files are kept for reference and rollback
 - Serial number increments if multiple updates occur same day
 - All history is preserved, nothing is lost
 
-### Skill Self-Improvement — File Versioning
+### Skill Self-Improvement — Automatic File Versioning
 
 **Naming Convention:** `auto-job-apply-YYYYMMDDNNN.md`
 
-**Update Process:**
+**Automatic Update Process:**
 1. Identify process improvements during session
 2. Document in session report under "Lessons Learned"
 3. Propose specific changes with rationale
-4. After user approval, instruct user to:
+4. Wait for user approval
+5. Upon approval, automatically:
    - Rename current `auto-job-apply.md` → `auto-job-apply-YYYYMMDDNNN.md`
-5. Provide complete new `auto-job-apply.md` content with:
-   - Incremented version number
-   - Updated changelog
-   - Improvements incorporated
-6. User creates fresh file and updates Project custom instructions
+   - Create new `auto-job-apply.md` with:
+     - Incremented version number
+     - Updated changelog
+     - Improvements incorporated
+6. Confirm to user: "Skill updated successfully. Archived previous version as auto-job-apply-YYYYMMDDNNN.md"
+
+**No user action required** — all file operations are automatic.
 
 ---
 
@@ -294,11 +311,16 @@ When updates are approved, use this versioning system:
 
 ## Changelog
 
+### v1.2.0 — 2025-01-31
+- Automatic file operations — no user engagement required for file updates
+- Added File Storage Configuration section
+- Skill automatically renames old files and creates new versions
+- User only needs to approve; file handling is automatic
+
 ### v1.1.0 — 2025-01-31
 - Added file versioning system for about-applicant.md and skill updates
 - Naming convention: `filename-YYYYMMDDNNN.md` for archived versions
 - Preserves complete history, enables rollback
-- Clear instructions for user to rename and recreate files
 
 ### v1.0.0 — 2025-01-31
 - Initial release
