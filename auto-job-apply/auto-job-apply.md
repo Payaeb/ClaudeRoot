@@ -1,5 +1,5 @@
 # Auto-job-apply Skill
-> Version: 1.0.0
+> Version: 1.1.0
 > Last Updated: 2025-01-31
 
 ---
@@ -232,22 +232,48 @@ Approve updates? (Yes to all / Yes to specific items / No)
 
 ## Update Protocol
 
-### about-applicant.md Updates
-- Only update after session report
-- Only update with explicit user approval
-- Show exact changes before applying
-- Increment version number
-- Update "Last Updated" date
-- Preserve all existing information (additive only, unless user requests removal)
+### about-applicant.md Updates — File Versioning
 
-### Skill Self-Improvement
-After each session:
-1. Identify any process improvements
+When updates are approved, use this versioning system:
+
+**Naming Convention:** `about-applicant-YYYYMMDDNNN.md`
+- `YYYYMMDD` = Year, month, day (e.g., 20250131)
+- `NNN` = Serial number starting at 001 each day (e.g., 001, 002, 003)
+
+**Update Process:**
+1. Only update after session report and explicit user approval
+2. Show exact changes before applying
+3. Instruct user to:
+   - Rename current `about-applicant.md` → `about-applicant-YYYYMMDDNNN.md`
+   - Example: `about-applicant.md` → `about-applicant-20250131001.md`
+4. Provide complete new `about-applicant.md` content with:
+   - Incremented version number
+   - Updated "Last Updated" date
+   - All existing information preserved
+   - New information added
+5. User creates fresh `about-applicant.md` with the provided content
+6. User uploads new file to Project knowledge
+
+**Version History:**
+- Archived files are kept for reference and rollback
+- Serial number increments if multiple updates occur same day
+- All history is preserved, nothing is lost
+
+### Skill Self-Improvement — File Versioning
+
+**Naming Convention:** `auto-job-apply-YYYYMMDDNNN.md`
+
+**Update Process:**
+1. Identify process improvements during session
 2. Document in session report under "Lessons Learned"
-3. Propose specific changes to this skill file
-4. Apply only after user approval
-5. Increment version number
-6. Add entry to Changelog
+3. Propose specific changes with rationale
+4. After user approval, instruct user to:
+   - Rename current `auto-job-apply.md` → `auto-job-apply-YYYYMMDDNNN.md`
+5. Provide complete new `auto-job-apply.md` content with:
+   - Incremented version number
+   - Updated changelog
+   - Improvements incorporated
+6. User creates fresh file and updates Project custom instructions
 
 ---
 
@@ -267,6 +293,12 @@ After each session:
 ---
 
 ## Changelog
+
+### v1.1.0 — 2025-01-31
+- Added file versioning system for about-applicant.md and skill updates
+- Naming convention: `filename-YYYYMMDDNNN.md` for archived versions
+- Preserves complete history, enables rollback
+- Clear instructions for user to rename and recreate files
 
 ### v1.0.0 — 2025-01-31
 - Initial release
